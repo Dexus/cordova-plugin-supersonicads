@@ -42,6 +42,7 @@ public class SupersonicAdsPlugin extends CordovaPlugin {
     public static final String EVENT_REWARDED_VIDEO_AVAILBILITY_CHANGED = "rewardedVideoAvailabilityChanged";
     public static final String EVENT_REWARDED_VIDEO_CLOSED = "rewardedVideoClosed";
     public static final String EVENT_REWARDED_VIDEO_OPENED = "rewardedVideoOpened";
+    public static final String EVENT_REWARDED_VIDEO_SHOW_FAILED = "rewardedVideoShowFailed";
     public static final String EVENT_REWARDED_VIDEO_INIT_FAILED = "rewardedVideoInitializationFailed";
     public static final String EVENT_REWARDED_VIDEO_INITIALIZED = "rewardedVideoInitialized";
     private Supersonic supersonic;
@@ -78,9 +79,21 @@ public class SupersonicAdsPlugin extends CordovaPlugin {
                 supersonic.showOfferwall();
                 callbackContext.success();
             }  else if (action.equals("validateIntegration")) {
-                IntegrationHelper.validateIntegration(this.cordova.getActivity());
+                com.supersonic.mediationsdk.integration.IntegrationHelper.validateIntegration(this.cordova.getActivity());
                 callbackContext.success();
-            } else {
+            } else if (action.equals("isRewardedVideoAvailable")) {
+                if (supersonic.isRewardedVideoAvailable()) {
+                    callbackContext.success();
+                } else {
+                    callbackContext.error(1);
+                }
+            }  else if (action.equals("isInterstitialAdAvailable")) {
+                if (supersonic.isInterstitialAdAvailable()) {
+                    callbackContext.success();
+                } else {
+                    callbackContext.error(1);
+                }
+            }else {
                 callbackContext.error("Unknown Action");
                 return false;
             }
@@ -136,6 +149,23 @@ public class SupersonicAdsPlugin extends CordovaPlugin {
             fireEvent(EVENT_REWARDED_VIDEO_INITIALIZED);
         }
 
+        @Override
+        public void onRewardedVideoShowFail(SupersonicError supersonicError) {
+            // Supported: All
+            //Invoked when RewardedVideo call to show a rewarded video has failed
+            //SupersonicError contains the reason for the failure.
+            Log.d(TAG, "onRewardedVideoShowFail : " + supersonicError.toString());
+            JSONObject data = new JSONObject();
+            JSONObject error = new JSONObject();
+
+            try {
+                error.put("code", supersonicError.getErrorCode());
+                error.put("message", supersonicError.getErrorMessage());
+                data.put("error", error);
+            } catch (JSONException e) {
+            }
+            fireEvent(EVENT_REWARDED_VIDEO_SHOW_FAILED, data);
+        }
 
         @Override
         public void onRewardedVideoInitFail(SupersonicError supersonicError) {

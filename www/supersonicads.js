@@ -18,6 +18,13 @@ function SupersonicAds(appKey, userId) {
 		cordova.exec(successCallback, failureCallback, 'SupersonicAdsPlugin', 'validateIntegration', []);
 	};
 
+	this.isRewardedVideoAvailable = function(successCallback, failureCallback) {
+		cordova.exec(successCallback, failureCallback, 'SupersonicAdsPlugin', 'isRewardedVideoAvailable', []);
+	};
+
+	this.isInterstitialAdAvailable = function(successCallback, failureCallback) {
+		cordova.exec(successCallback, failureCallback, 'SupersonicAdsPlugin', 'isInterstitialAdAvailable', []);
+	};
 }
 
 if(typeof module !== undefined && module.exports) {
