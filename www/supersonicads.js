@@ -13,6 +13,10 @@ function SupersonicAds(appKey, userId) {
 	this.showOfferwall = function(successCallback, failureCallback) {
 		cordova.exec(successCallback, failureCallback, 'SupersonicAdsPlugin', 'showOfferwall', []);
 	};
+	
+	this.validateIntegration = function(successCallback, failureCallback) {
+		cordova.exec(successCallback, failureCallback, 'SupersonicAdsPlugin', 'validateIntegration', []);
+	};
 
 }
 
