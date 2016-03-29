@@ -62,11 +62,9 @@ public class SupersonicAdsPlugin extends CordovaPlugin {
             Log.i(TAG, action);
 
             if (action.equals("init")) {
-
                 init(args.getString(0), args.getString(1));
                 callbackContext.success();
             } else if (action.equals("showRewardedAd")) {
-
                 if (args.isNull(0)) {
                     supersonic.showRewardedVideo();
                 } else {
@@ -74,15 +72,15 @@ public class SupersonicAdsPlugin extends CordovaPlugin {
                 }
                 callbackContext.success();
             } else if (action.equals("showInterstitial")) {
-
                 supersonic.showInterstitial();
                 callbackContext.success();
             } else if (action.equals("showOfferwall")) {
-
                 supersonic.showOfferwall();
                 callbackContext.success();
+            }  else if (action.equals("validateIntegration")) {
+                IntegrationHelper.validateIntegration(this.cordova.getActivity());
+                callbackContext.success();
             } else {
-
                 callbackContext.error("Unknown Action");
                 return false;
             }
