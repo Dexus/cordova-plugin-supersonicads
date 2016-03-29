@@ -38,6 +38,23 @@ document.addEventListener('deviceready', function() {
     
     // show an interstitial
     ssAds.showInterstitial();
+
+    // launch in Android Studio/Xcode mediation integration verification
+    ssAds.validateIntegration();
+
+    // Check is a rewarded video is available to show
+    ssAds.isRewardedVideoAvailable(function () {
+    	alert('Yes');
+	}, function () {
+		alert('No');
+	});
+
+	// Check is an interstitial is available to show
+    ssAds.isInterstitialAdAvailable(function () {
+    	alert('Yes');
+	}, function () {
+		alert('No');	
+	});
     
     // give em some credit
 	window.addEventListener("offerwallCreditReceived", function(e) {
