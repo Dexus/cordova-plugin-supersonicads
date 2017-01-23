@@ -7,6 +7,6 @@ repositories {
 cdvPluginPostBuildExtras.add({
 
 	dependencies {
-	    compile 'com.supersonic.sdk:mediationsdk:6.3.6@jar'
+	    compile 'com.supersonic.sdk:mediationsdk:6.4.21@jar'
 	}
 });
